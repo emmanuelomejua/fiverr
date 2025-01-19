@@ -14,7 +14,7 @@ const Login = () => {
     try {
       const res = await SERVER.post("auth/login", { email, password });
       localStorage.setItem("currentUser", JSON.stringify(res?.data));
-      window.location.replace('/login')
+      window.location.replace('/')
     } catch (err: any) {
       console.log(err)
       setError(err?.response?.data);

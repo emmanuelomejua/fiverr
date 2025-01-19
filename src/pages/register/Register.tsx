@@ -17,7 +17,8 @@ const initialState = {
 const Register = () => {
 
   const [user, setUser] = useState(initialState);
-  const [file, setFile] = useState<string>('')
+  const [file, setFile] = useState<string>('');
+  const [error, setError] = useState('')
 
   const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> ) => {
     const {name, value } = e.target;
@@ -48,10 +49,11 @@ const Register = () => {
         ...user, 
         // img: url.toString()
       })
+      // console.log(res.data);
       res.data &&
       window.location.replace('/login')
-    } catch (error) {
-      console.error(error)
+    } catch (error: any) {
+      setError(error.response.data)
     }
   }
 
@@ -92,6 +94,7 @@ const Register = () => {
             onChange={handleChange}
           />
           <button type="submit">Register</button>
+          {error && <span className='err'>{error}</span>}
         </div>
         <div className="right">
           <h1>I want to become a seller</h1>

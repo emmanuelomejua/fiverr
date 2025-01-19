@@ -5,7 +5,7 @@ const GigCard = ({item}: any) => {
   return (
     <Link to='/gigs/:id' className='link'>
         <main className='gigcard'>
-        <img src={item.img} alt="" />
+        <img src={item.cover} alt="" />
         <div className="info">
           <div className="user">
             <img src={item.pp} alt="" />
@@ -15,7 +15,7 @@ const GigCard = ({item}: any) => {
 
           <div className="star">
             <img src="./img/star.png" alt="" />
-            <span>{item.star}</span>
+            <span>{item.starNum}</span>
           </div>
 
         </div>

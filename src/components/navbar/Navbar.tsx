@@ -60,7 +60,7 @@ const Navbar = () => {
         },
         {    
             id: 3,
-            name: 'Sign In',
+            name: `${!user ? 'Sign In': ''}`,
             url: '/login'
         },
         {    
