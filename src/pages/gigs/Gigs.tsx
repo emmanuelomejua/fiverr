@@ -2,9 +2,8 @@ import React, {  useEffect, useRef, useState } from 'react';
 import './gigs.scss'
 import down from './down.png';
 import GigCard from '../../components/cards/GigCard';
-import { useQuery } from '@tanstack/react-query';
-import SERVER from '../../utils/server';
 import { useLocation } from 'react-router-dom';
+import { useGetAllGigs } from '../../utils/api';
 
 
 
@@ -26,21 +25,7 @@ const Gigs = () => {
   const maxRef = useRef<HTMLInputElement | null>(null);
 
 
-  const { error, data, isPending, refetch } = useQuery({
-    queryKey: ['gigs', filters],
-    queryFn: async () => {
-      const queryParams = [];
-      if (filters.min) queryParams.push(`min=${filters.min}`);
-      if (filters.max) queryParams.push(`max=${filters.max}`);
-      if(sort) queryParams.push(`${sort}`)
-      const queryString = queryParams.length > 0 ? `&${queryParams.join('&')}` : '';
-      const res = await SERVER.get(`gig?${search}${queryString}`);
-      return res.data;
-    }
-  })
-
-
-  console.log(data);
+  const { data, error, isPending, refetch } = useGetAllGigs(filters, sort, search)
 
   const reSort = (type: any) => {
     setSort(type);

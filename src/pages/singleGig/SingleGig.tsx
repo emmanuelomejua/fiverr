@@ -2,13 +2,26 @@ import React from 'react';
 import './singlegig.scss';
 import stars from './star.png';
 import Slide from '../../components/slides/Slider';
+import { useParams } from 'react-router-dom';
+import { useGetSingleGig } from '../../utils/api';
+
+
 
 const SingleGig = () => {
+
+
+  const { id } = useParams();
+
+  const { data } = useGetSingleGig(id);
+
+
+
+
   return (
     <main className='gig'>
       <div className="cont">
         <section className="left">
-        <span className='bc'>FIVER, {`>`} GRAPHICS & {`>`} DESIGN </span>
+        <span className='bc'>FIVERR {`>`} GRAPHICS & {`>`} DESIGN </span>
         <h1>I will create AI generated art for you</h1>
 
         <div className="user">
