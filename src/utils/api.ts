@@ -37,8 +37,22 @@ export const useGetAllGigs = (filters: any, sort: any, search: any) => {
 
 
 
+export const useGetAllGig = () => {
+  const {error, data, isPending} = useQuery({
+    queryKey: ['all-gigs'],
+    queryFn: async () => {
+      const res = await SERVER.get('gig');
+      return res.data;
+    }
+  })
+
+  return { data, error, isPending };
+}
+
+
+
 export const useSingleUser = (userId: string) => {
-    const { data } = useQuery({
+    const { data, error, isPending } = useQuery({
         queryKey: ['singleUser'],
         queryFn: async () => {
           const res = await SERVER.get(`user/${userId}`);
@@ -46,7 +60,7 @@ export const useSingleUser = (userId: string) => {
         }
       })
 
-      return { data }
+      return { data, isPending, error }
 }
 
 

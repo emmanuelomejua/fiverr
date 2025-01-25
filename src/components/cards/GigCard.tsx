@@ -16,7 +16,7 @@ const GigCard = ({item}: any) => {
         <img src={item.cover} alt="" />
         <div className="info">
           <div className="user">
-            <img src={data?.img ? data.img : '/img//noavatar.jpg'} alt="" />
+            <img src={data?.img ? data.img : '/img/noavatar.jpg'} alt="" />
             <span>{data?.username}</span>
           </div>
           <p>{item.desc}</p>
@@ -37,7 +37,7 @@ const GigCard = ({item}: any) => {
             <h2>
               $ {item.price}
               <sup>99</sup>
-            </h2>
+          </h2>
           </div>
         </div>
     
