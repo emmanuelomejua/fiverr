@@ -17,8 +17,7 @@ const SingleGig = () => {
 
   const { data:user, error, isPending } = useSingleUser(data?.userId)
 
-  console.log(user);
-
+  
 
   return (
     <main className='gig'>
@@ -30,13 +29,15 @@ const SingleGig = () => {
         {isPending ? 'Loading...': error ? '':
         <div className="user">
           <img src="" alt="" className="" />
-          <span>Dev Tompolo</span>
+          <span>{user?.username}</span>
+          {!isNaN(Math.round(data?.totalStars / data?.starNum)) && (
           <div className="stars">
-            <img src={stars} alt="" className="" />
-            <img src={stars} alt="" className="" />
-            <img src={stars} alt="" className="" />
-            <span>3</span>
+            {Array.from({ length: Math.round(data?.totalStars / data?.starNum) }).map((_, i) => (
+                <img src={stars} alt="" key={i} />
+              ))}
+            <span>{Math.round(data?.totalStars / data?.starNum)}</span>
           </div>        
+          )}
         </div>
         }
 
@@ -49,8 +50,8 @@ const SingleGig = () => {
 
 
         <h2>About This Gig</h2>
-          <p>"https://images.pexels.com/photos/720327/pexels-photo-720327.jpeg?auto=compress&cs=tinysrgb&w=1600"
-            {data?.desc}
+          <p>
+            {user?.desc}
           </p>
 
           { isPending ? 'Loading...': error ? '':
@@ -58,11 +59,11 @@ const SingleGig = () => {
           <h2>About The Seller</h2>
             <div className="user">
               <img
-                src={data?.img || '/img/noavatar.jpg' }
+                src={user?.img || '/img/noavatar.jpg' }
                 alt=""
               />
               <div className="info">
-                <span>{data?.username}</span>
+                <span>{user?.username}</span>
                 {!isNaN(Math.round(data?.totalStars / data?.starNum)) && (
                   <div className="stars">
                     {Array.from({ length: Math.round(data?.totalStars / data?.starNum) }).map((_, i) => (
@@ -78,7 +79,7 @@ const SingleGig = () => {
               <div className="items">
                 <div className="item">
                   <span className="title">From</span>
-                  <span className="desc">{data?.country}</span>
+                  <span className="desc">{user?.country}</span>
                 </div>
                 <div className="item">
                   <span className="title">Member since</span>
@@ -98,14 +99,14 @@ const SingleGig = () => {
                 </div>
               </div>
               <hr />
-                <p>{data?.desc}</p>
+                <p>{user?.desc}</p>
             </div>
-              <Reviews/>
+              <Reviews gigId={data?._id}/>
 
               </div>
               }
-              
-  </section>
+
+           </section>
 
         <section className="right">
         <div className="price">

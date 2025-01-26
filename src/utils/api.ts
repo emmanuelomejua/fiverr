@@ -77,9 +77,19 @@ export const useMyGigs = (userId: String) => {
     return { data, isPending, error, refetch }
 }
 
-// export const useGetAllGigs = () => {
-    
-// }
+
+
+export const useGetReviews = (gigId: string) => {
+    const { data,  error, isPending } = useQuery({
+      queryKey: ['reviewes'], 
+      queryFn: async () => {
+        const res = await SERVER.get(`review/${gigId}`)
+        return res.data;
+      }
+    });
+
+    return { data, isPending, error }
+}
 
 // export const useGetAllGigs = () => {
     
