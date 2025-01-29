@@ -1,6 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import SERVER from "./server";
-
 
 
 
@@ -81,7 +80,7 @@ export const useMyGigs = (userId: String) => {
 
 export const useGetReviews = (gigId: string) => {
     const { data,  error, isPending } = useQuery({
-      queryKey: ['reviewes'], 
+      queryKey: ['reviews'], 
       queryFn: async () => {
         const res = await SERVER.get(`review/${gigId}`)
         return res.data;
@@ -91,6 +90,18 @@ export const useGetReviews = (gigId: string) => {
     return { data, isPending, error }
 }
 
-// export const useGetAllGigs = () => {
-    
-// }
+export const useAddReview = () => {
+
+
+  const queryClient = useQueryClient()
+
+    const mutation = useMutation({
+      mutationFn: (review: any) => {
+        return SERVER.post('review', review)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({queryKey: ['reviews']})
+      }
+    })
+    return mutation;
+}
