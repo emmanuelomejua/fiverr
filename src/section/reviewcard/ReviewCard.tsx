@@ -7,7 +7,7 @@ const ReviewCard = ({review}: any) => {
 
   const { data } = useSingleUser(review.userId);
 
-  console.log(data)
+
 
 
   return (

@@ -52,11 +52,12 @@ export const useGetAllGig = () => {
 
 export const useSingleUser = (userId: string) => {
     const { data, error, isPending } = useQuery({
-        queryKey: ['singleUser'],
+        queryKey: [userId],
         queryFn: async () => {
           const res = await SERVER.get(`user/${userId}`);
           return res.data;
-        }
+        },
+        enabled: !!userId
       })
 
       return { data, isPending, error }
@@ -104,4 +105,18 @@ export const useAddReview = () => {
       }
     })
     return mutation;
+}
+
+
+
+export const useGetOrders = () => {
+  const { data,  error, isPending } = useQuery({
+    queryKey: ['ordees'], 
+    queryFn: async () => {
+      const res = await SERVER.get('order')
+      return res.data;
+    }
+  });
+
+  return { data, isPending, error }
 }
