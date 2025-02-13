@@ -120,3 +120,19 @@ export const useGetOrders = () => {
 
   return { data, isPending, error }
 }
+
+
+
+export const useCreateOrders = () => {
+
+    const mutation = useMutation({
+      mutationFn: (gigId: string) => {
+        
+        return SERVER.post(`order/${gigId}`)
+      },
+      onSuccess: () => {
+
+      }
+    })
+    return mutation;
+}

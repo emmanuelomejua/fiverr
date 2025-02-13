@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react';
 import { Link } from "react-router-dom";
 import './messages.scss';
 
-const Messages: React.FC = () => {
+const Messages: FC = () => {
 
   const currentUser = {
     id: 1,

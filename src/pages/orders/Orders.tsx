@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './orders.scss';
+import {  useGetOrders } from '../../utils/api';
 
-const Message: React.FC = () => {
+
+
+const Orders:FC = () => {
+
+  const user =  localStorage.getItem('currentUser')
+
+
+  const currentUser = user ?  JSON.parse(user) : null;
+
+  const { data } = useGetOrders();
   
-  const currentUser = {
-    id: 1,
-    username: "Anna",
-    isSeller: true,
-  };
 
 
   return (
@@ -24,100 +29,29 @@ const Message: React.FC = () => {
             {<th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>}
             <th>Contact</th>
           </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>Stunning concept art</td>
-            <td>59.<sup>99</sup></td>
-            <td>Maria Anders</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>Ai generated concept art</td>
-            <td>79.<sup>99</sup></td>
-            <td>Francisco Chang</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>High quality digital character</td>
-            <td>110.<sup>99</sup></td>
-            <td>Roland Mendel</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>Illustration hyper realistic painting</td>
-            <td>39.<sup>99</sup></td>
-            <td>Helen Bennett</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>Original ai generated digital art</td>
-            <td>119.<sup>99</sup></td>
-            <td>Yoshi Tannamuri</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img
-                className="image"
-                src="https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
-              />
-            </td>
-            <td>Text based ai generated art</td>
-            <td>49.<sup>99</sup></td>
-            <td>Giovanni Rovelli</td>
-            <td>
-              <img className="message" src="./img/message.png" alt="" />
-            </td>
-          </tr>
+
+         {data?.map((d: any) => (
+          <tr key={d._id}>
+              <td>
+                <img
+                  className="image"
+                  src={d.img || '/img//noavatar.jpg'}
+                  alt=""
+                />
+              </td>
+              <td style={{ textTransform: 'capitalize' }}>{d?.title}</td>
+              <td>{d?.price}<sup>99</sup></td>
+              <td>Maria Anders</td>
+              <td>
+                <img className="message" src="./img/message.png" alt="" />
+              </td>
+            </tr>
+         )) 
+          }
         </table>
       </div>
     </div>
   )
 }
 
-export default Message;
+export default Orders
