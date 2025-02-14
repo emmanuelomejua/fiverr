@@ -26,7 +26,7 @@ const Orders:FC = () => {
             <th>Image</th>
             <th>Title</th>
             <th>Price</th>
-            {<th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>}
+            {/* {<th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>} */}
             <th>Contact</th>
           </tr>
 
@@ -40,8 +40,8 @@ const Orders:FC = () => {
                 />
               </td>
               <td style={{ textTransform: 'capitalize' }}>{d?.title}</td>
-              <td>{d?.price}<sup>99</sup></td>
-              <td>Maria Anders</td>
+              <td>{`N${d?.price}`}</td>
+              {/* <td>Maria Anders</td> */}
               <td>
                 <img className="message" src="./img/message.png" alt="" />
               </td>
@@ -50,7 +50,7 @@ const Orders:FC = () => {
           }
         </table>
       </div>
-    </div>
+    </div> 
   )
 }
 

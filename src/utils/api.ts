@@ -136,3 +136,18 @@ export const useCreateOrders = () => {
     })
     return mutation;
 }
+
+
+
+export const useGetConversation = () => {
+
+  const { data, isPending, error } = useQuery({
+    queryKey: ['conversations'],
+    queryFn: async () => {
+      const res = await SERVER.get('conversation');
+
+      return res.data;
+    }
+  })
+  return { data, error, isPending }
+}
