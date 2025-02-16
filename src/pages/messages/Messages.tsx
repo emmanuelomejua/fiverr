@@ -1,18 +1,24 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 import './messages.scss';
-import { useGetConversation } from '../../utils/api';
+import { useGetConversation, useReadConversation } from '../../utils/api';
 import moment from 'moment';
 
 
 
-const Messages: FC = () => {
+const Messages = () => {
 
   const currentUser = localStorage.getItem('currentUser')
 
   const user = currentUser ?  JSON.parse(currentUser) : null;
 
   const { data } = useGetConversation();
+
+  const mutation = useReadConversation();
+
+  const handleRead = (id: string) => {
+    mutation.mutate(id)
+  }
 
 
   return (
@@ -23,22 +29,26 @@ const Messages: FC = () => {
         </div>
         <table>
           <tr>
-            <th>{user.isSeller ? "Buyer" : "Seller"}</th>
+            <th>{user?.isSeller ? "Buyer" : "Seller"}</th>
             <th>Last Message</th>
             <th>Date</th>
             <th>Action</th>
           </tr>
           { data?.map((d: any) => (
-            <tr className="active">
-              <td>Charley Sharp</td>
+            <tr className={`${(user.isSeller && !d.readBySeller) || (!user.isSeller && !d.readByBuyer)}` && 'active'} key={d.id}>
+              <td>{user.isSeller ? d.buyerId : d.sellerId}
+              </td>
+              
               <td>
-                <Link to="/message/123" className="link">
+                <Link to={`/message/${d.id}`} className="link">
                   {d?.lastMessage?.substring(0, 100)}...
                 </Link>
               </td>
               <td>{moment(d.updatedAt).fromNow()}</td>
               <td>
-                <button>Mark as Read</button>
+                {((user.isSeller && !d.readBySeller) || (!user.isSeller && !d.readByBuyer)) && (
+                  <button onClick={() => handleRead(d.id)}>Mark as Read</button>
+                )}
               </td>
             </tr>
           ))

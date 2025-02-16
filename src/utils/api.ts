@@ -151,3 +151,50 @@ export const useGetConversation = () => {
   })
   return { data, error, isPending }
 }
+
+
+export const useReadConversation = () => {
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+   mutationFn: (id: string) => {
+    return SERVER.patch(`conversation/${id}`)
+   },
+   onSuccess: () => {
+    queryClient.invalidateQueries({queryKey: ['conversations']})
+   }
+  })
+  return mutation;
+}
+
+
+export const useGetMsg = (id: string | undefined) => {
+  const { data, isPending, error } = useQuery({
+    queryKey: ['msg'],
+    queryFn: async () => {
+      const res = await SERVER.get(`messages/${id}`);
+      return res.data;
+    },
+    enabled: !!id
+  })
+  return { data, isPending, error }
+}
+
+
+export const useMsgMutation = () => {
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (message: { conversationId: string; desc: string }) => {
+      return SERVER.post(`messages`, message)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['msg']})
+    }
+  })
+
+  return mutation;
+}
+
